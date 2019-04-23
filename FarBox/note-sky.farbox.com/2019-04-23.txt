@@ -1,0 +1,13 @@
+---
+date:
+status: public
+title:
+---
+
+```java
+    public class Test(){
+        public static void main(){
+        
+        }    
+    }
+```

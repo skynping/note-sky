@@ -265,3 +265,30 @@ $$
 
 
 
+## 19. 引入图片
+
+```markdown
+![图片名](图片链接)"图片抬头"
+```
+
+
+
+## 20. 图表
+
+```markdown
+​```mermaid
+graph TD
+	A-->B
+	A-->C
+	B-->D
+	C-->D
+```
+
+~~~mermaid
+graph TD
+	A-->B
+	A-->C
+	B-->D
+	C-->D
+~~~
+
