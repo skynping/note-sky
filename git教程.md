@@ -4,11 +4,11 @@
 
 # <center style="color:blue">git教程</center>
 
-**安装**
+## **安装**
 linux下安装：sudo apt-get install git
 window下安装：从官网下载即可
 
-**git基本命令和配置**
+## **git基本命令和配置**
 自报家门：$ git config --global user.name "Your Name"
 					$ git config --global user.email "email@example.com"
 
@@ -29,19 +29,19 @@ window下安装：从官网下载即可
 版本库中删除文件 ：先git rm  < file> 再 git commit
 误删工作区文件恢复：git checkout -- < file>(类似一键还原)
 
-**远程仓库**
+## **远程仓库**
 第一步，创建ssh key ，在用户主目录下，找到.ssh目录，创建ssh key：ssh-keygen -t rsa -C "youremail@example.com" ，然后一路回车即可，在用户主目录里找到.ssh目录，里面有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。
 第二步，登陆GitHub，打开“Account settings”，“SSH Keys”页面：
 然后，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容，点“Add Key”，你就应该看到已经添加的Key，
 
-**添加远程库**
+## **添加远程库**
 首先，登陆GitHub，然后，在右上角找到“Create a new repo”按钮，创建一个新的仓库，
 关联仓库：git remote add origin git@github.com:< git账户名>/仓库名.git     (origin为远程库名字，习惯性命名，可改)
 第一次将本地库的所有内容推送到远程库上：git push -u origin master
 非第一次将本地库的所有内容推送到远程库上：git push origin master
 克隆一个本地库：git clone git@github.com:< git账户名>/仓库名.git
 
-**分支**
+## **分支**
 创建和切换dev分支：git checkout -b dev
 创建分支：git branch < name>
 查看当前分支：git branch
@@ -58,14 +58,14 @@ window下安装：从官网下载即可
 用带参数的git log也可以看到分支的合并情况：git log --graph --pretty=oneline --abbrev-commit
 查看分支合并图：git log --graph
 
-**分支管理策略**
+## **分支管理策略**
 通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。
 如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
 下面我们实战一下--no-ff方式的git merge：git merge --no-ff -m "merge with no-ff" dev（dev为分支名）
 不使用Fast forward模式，merge后就像这样：
 ![不使用Fast forward模式](https://img-blog.csdnimg.cn/20190108192512612.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMjUxNzg5,size_16,color_FFFFFF,t_70)
 
-**分支策略**
+## **分支策略**
 在实际开发中，我们应该按照几个基本原则进行分支管理：
 
 首先，master分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
@@ -80,7 +80,7 @@ window下安装：从官网下载即可
 Git分支十分强大，在团队开发中应该充分应用。
 合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
 
-**Bug分支**
+## **Bug分支**
 暂存工作现场：git stash
 查看缓存的现场：git stash list
 恢复现场（不删除stash）：git stash apply
@@ -89,7 +89,7 @@ Git分支十分强大，在团队开发中应该充分应用。
 
 强制销毁未保存的分支：git branch -D < name>
 
-**多人协作**
+## **多人协作**
 查看远程库信息：git remote
 查看远程库详细信息：git remote -v
 推送分支：git push origin < name>
@@ -117,7 +117,7 @@ feature分支是否推到远程，取决于你是否和你的小伙伴合作在�
 如果git pull提示no tracking information，则*说明本地分支和远程分支的链接关系没有创建*，
 用命令git branch --set-upstream-to < branch-name> origin/< branch-name>。
 
-**标签管理**
+## **标签管理**
 概念：发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就唯一确定了打标签时刻的版本。将来无论什么时候，取某个标签的版本，就是把那个打标签的时刻的历史版本取出来。所以，标签也是版本库的一个快照。
 tag（标签）就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
 
@@ -133,7 +133,7 @@ tag（标签）就是一个让人容易记住的有意义的名字，它跟某�
 删除已经推送到远程的标签，先删除本地的标签git tag -d  < tagname>，
 再从远程删除git push origin :refs/tags/< tagname>
 
-**忽略特殊文件**
+## **忽略特殊文件**
 有些时候，你必须把某些文件放到Git工作目录中，但又不能提交它们，比如保存了数据库密码的配置文件啦，等等，每次git status都会显示Untracked files ...，有强迫症的童鞋心里肯定不爽。好在Git考虑到了大家的感受，这个问题解决起来也很简单，在Git工作区的根目录下创建一个特殊的.gitignore文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件。不需要从头写.gitignore文件，GitHub已经为我们准备了各种配置文件，只需要组合一下就可以使用了。所有配置文件可以直接在线浏览：https://github.com/github/gitignore
 
 忽略文件的原则是：
@@ -170,7 +170,7 @@ deploy_key_rsa
 可以用git check-ignore命令检查：git check-ignore -v App.class
 .gitignore文件本身要放到版本库里，并且可以对.gitignore做版本管理
 
-**配置别名**
+## **配置别名**
 有没有经常敲错命令？比如git status？status这个单词真心不好记。
 如果敲git st就表示git status那就简单多了，当然这种偷懒的办法我们是极力赞成的。
 我们只需要敲一行命令，告诉Git，以后st就表示status：
@@ -186,7 +186,7 @@ $ git config --global alias.br branch
 ```
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
-**配置文件**
+## **配置文件**
 配置Git的时候，加上--global是针对当前用户起作用的，如果不加，那只针对当前的仓库起作用。
 配置文件放哪了？每个仓库的Git配置文件都放在.git/config文件中：
 
