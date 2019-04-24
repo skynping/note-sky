@@ -240,3 +240,106 @@ public class jdbcSppringdemo {
 	* **Repeatable read**： 重复读，解决脏读和重复读
 	* Serializable：解决所有问题
 
+#### 3.5 Spring平台事务管理API
+- 平台事务管理器：接口，是Spring用于管理事务的真正对象
+	- **DataSourceTranctionManager** : 底层使用JDBC管理事务
+	- **HibernateTranctionManager**：底层使用Hibernate管理事务
+
+#### 3.6 TranscationDefinition：事务定义信息
+- 事务定义：用于定义事务的相关的信息，**隔离级别**、超时信息、**传播行为**、是否只读
+
+#### 3.7 TranscationStatus：事务的状态
+- 事务状态：用于记录在事务管理过程中，事务的状态的对象
+
+#### 3.8 事务管理的API的关系
+- Spring进行事务管理的时候，首先**平台事务管理器**根据**事务定义**信息进行事务的管理，在事务管理的过程中，产生各种状态，将这些状态的信息记录到**事务状态**的对象中。
+
+#### 3.9 传播行为
+- 传播行为：业务层之间的方法相互调用，事务的传播行为主要业务层相互调用的问题
+- Spring中提供了其中事务的传播行为
+	- 保证多个操作在同一个事务中
+		- **PROPAGATION_REQUIRED**: 默认值，使用A中的事务，使用A中的事务，如果A没有，创建一个新的事务，将操作包含起来
+		- PROPAGTION_SUPPORTS
+		- PROPAGTION_MANDATORY
+
+	- 保证多个事务不再同一个事务中
+		- **PROPAGATION_REQUIRES_NEW**:如果A中有事务，将A的事务挂起（暂停），创建新事务，只包含自身的操作。如果A中没有事务，创建一个新事务
+		- PROPAGTION_NOT_SUPPORTS
+		- PROPAGTION_NEVER
+
+	- 嵌套事务
+		- **PROPAGATION_NESTED**: 嵌套事务，如果A中有事务，按照A的事务执行，执行完成后，这只一个保存点，执行B中的操作，如果没有异常，执行通过，如果异常，可以选择回滚到保存点或初始状态
+
+#### 3.10 声明式事务管理
+**测试类关系**
+![类关系](.\img\类关系.png)
+
+##### 3.10.1 xml方式
+```xml
+<!-- 配置事务管理器 -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"></property>
+</bean>
+
+<!-- 配置事务的增强 -->
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <!-- 事务管理的规则 -->
+    <tx:attributes>
+        <tx:method name="save*" propagation="REQUIRED"/>
+        <tx:method name="update*" propagation="REQUIRED"/>
+        <tx:method name="delete*" propagation="REQUIRED"/>
+        <tx:method name="find*" read-only="true"/>
+        <tx:method name="*" propagation="REQUIRED"/>
+    </tx:attributes>
+</tx:advice>
+
+<!-- AOP配置 -->
+<aop:config>
+    <aop:pointcut expression="execution(* com.xx.www.demo3.AccountServiceImp.*(..))" id="pointcut1"/>
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
+</aop:config>
+```
+
+##### 3.10.2 注解方式
+```xml
+<!-- 注解方式配置事务 -->
+<!-- 配置事务管理器 -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"></property>
+</bean>
+
+<!-- 开启注解事务 -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+```
+```java
+package com.xx.www.demo3;
+
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+
+/*	@Transactional：配置事务管理注解
+ * isolation: 隔离级别
+ * propagation： 传播行为
+ * */
+@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRED)
+public class AccountServiceImp implements AccountService {
+	
+	private AccountDao accountDao;
+	
+	public void setAccountDao(AccountDao accountDao) {
+		this.accountDao = accountDao;
+	}
+
+	@Override
+	public void tranferMoney(String from, String to, Double money) {
+		// TODO Auto-generated method stub
+		accountDao.outMoney(from, money);
+//		int i = 1/0;
+		accountDao.inMoney(to, money);
+	}
+
+}
+
+```
