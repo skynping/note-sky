@@ -1,8 +1,6 @@
 > <p style="color:blue">以下内容参考于[廖雪峰的博客](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/)</p>
 
----
-
-# <center style="color:blue">git教程</center>
+<h1><center style="color:blue">git教程</center></h1>
 
 ## **安装**
 linux下安装：sudo apt-get install git

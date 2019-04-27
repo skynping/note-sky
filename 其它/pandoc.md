@@ -1,5 +1,5 @@
 [TOC]
-<center>**pandoc使用教程**</center>
+<h1><center>pandoc使用教程</center></h1>
 
 ### 1.pandoc
 ```markdown
