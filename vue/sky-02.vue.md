@@ -138,3 +138,57 @@ var vm2 = new Vue({
     }
 ```
 
+
+
+## 5. 生命周期函数
+
+![lifecycle](img/lifecycle.png)
+
+## 6. 利用vue-resource发起get、post请求
+
+```javascript
+<script src="./lib/vue.js"></script>
+<!-- 调用get、post、jsonp：this.$http.get(url,[options]).then(result=>{}) -->
+<script src="./lib/vue-resource-1.3.4.js"></script>
+```
+
+```html
+ <div id="app">
+     <input type="button" @click="toGet">
+     <input type="button" @click="toPost">
+     <input type="button" @click="toJsonp">
+</div>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            msg:""
+        },
+        methods:{
+            toGet(){
+                this.$http.get(url,[option]).then(result=>{
+                    console.log(result.body);
+                })
+            },
+            toPost(){
+                this.$http.post(url,[data],[option]).then(result=>{
+                    console.log(result.body);
+                })
+            },
+            toJsonp(){
+                this.$http.jsonp(url,[option]).then(result=>{
+                    console.log(result.body);
+                })
+            }
+        }
+    })
+</script>
+```
+
+```js
+// 配置根域名
+Vue.http.options.root = "http://localhost:3000/";
+// 全局启用emulateJSON选项,会将post的数据以表单的格式提交给服务器
+Vue.http.options.emulateJSON = true;
+```
+
