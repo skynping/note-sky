@@ -145,8 +145,25 @@
      provided：已提供依赖范围，对于编译，测试的classpath都有效，但对于运行无效，因为由容器已经提供
      runtime：运行时提供
      -->
-        <scope>compile</scope>
+        <!--<scope>compile</scope>-->
+        <!--
+			optional,为true时不传递依赖，flase则传递
+		-->
+        <!--<optional>true</optional>-->
+        <exclusions>
+		<!-- 排除test3依赖 -->
+			<exclusion>
+	          <groupId>com.xx</groupId>
+	          <artifactId>test3</artifactId>
+	        </exclusion>
+		</exclusions>
     </dependency>
 <dependencies>
 ```
+
+#### 远程仓库
+
+Maven默认的远程仓库 **http://repo1.maven.org/maven2**
+
+阿里云中央仓库 **http://maven.aliyun.com/nexus/content/repositories/central/**
 
