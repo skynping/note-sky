@@ -191,4 +191,3 @@ Vue.http.options.root = "http://localhost:3000/";
 // 全局启用emulateJSON选项,会将post的数据以表单的格式提交给服务器
 Vue.http.options.emulateJSON = true;
 ```
-
