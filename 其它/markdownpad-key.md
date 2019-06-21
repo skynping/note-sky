@@ -1,4 +1,6 @@
-<center>**MarkdownPad2激活**</center>
+<center><h1 style="color:red">
+    MarkdownPad2激活码
+    </h1></center>
 
 > email Soar360@live.com
 

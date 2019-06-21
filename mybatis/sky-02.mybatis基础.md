@@ -1,4 +1,4 @@
-<center><h1>mybatis基础</h1></center>
+<center><h1 style="color:blue">mybatis基础</h1></center>
 
 [TOC]
 
@@ -50,7 +50,7 @@
 </configuration>
 ```
 
-##### 配置别名
+### 配置别名
 
 ```xml
 <typeAliases>
@@ -60,7 +60,7 @@
 
 每一个在包 `domain.blog` 中的 Java Bean，在没有注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。 比如 `domain.blog.Author` 的别名为 `author`
 
-##### 常见的 Java 类型内建的相应的类型别名
+### 常见的 Java 类型内建的相应的类型别名
 
 | 别名       | 映射的类型 |
 | ---------- | ---------- |
@@ -332,4 +332,3 @@ ORDER BY ${columnName}
 | `id`          | 当前命名空间中的一个唯一标识，用于标识一个结果映射。         |
 | `type`        | 类的完全限定名, 或者一个类型别名（关于内置的类型别名，可以参考上面的表格）。 |
 | `autoMapping` | 如果设置这个属性，MyBatis将会为本结果映射开启或者关闭自动映射。 这个属性会覆盖全局的属性 autoMappingBehavior。默认值：未设置（unset）。 |
-
