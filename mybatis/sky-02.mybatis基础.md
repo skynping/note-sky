@@ -332,3 +332,23 @@ ORDER BY ${columnName}
 | `id`          | 当前命名空间中的一个唯一标识，用于标识一个结果映射。         |
 | `type`        | 类的完全限定名, 或者一个类型别名（关于内置的类型别名，可以参考上面的表格）。 |
 | `autoMapping` | 如果设置这个属性，MyBatis将会为本结果映射开启或者关闭自动映射。 这个属性会覆盖全局的属性 autoMappingBehavior。默认值：未设置（unset）。 |
+
+#### resultMap包含的元素：
+
+```xml
+<!--column不做限制，可以为任意表的字段，而property须为type 定义的pojo属性-->
+<resultMap id="唯一的标识" type="映射的pojo对象">
+  <id column="表的主键字段，或者可以为查询语句中的别名字段" jdbcType="字段类型" property="映射pojo对象的主键属性" />
+  <result column="表的一个字段（可以为任意表的一个字段）" jdbcType="字段类型" property="映射到pojo对象的一个属性（须为type定义的pojo对象中的一个属性）"/>
+  <association property="pojo的一个对象属性" javaType="pojo关联的pojo对象">
+    <id column="关联pojo对象对应表的主键字段" jdbcType="字段类型" property="关联pojo对象的主席属性"/>
+    <result  column="任意表的字段" jdbcType="字段类型" property="关联pojo对象的属性"/>
+  </association>
+  <!-- 集合中的property须为oftype定义的pojo对象的属性-->
+  <collection property="pojo的集合属性" ofType="集合中的pojo对象">
+    <id column="集合中pojo对象对应的表的主键字段" jdbcType="字段类型" property="集合中pojo对象的主键属性" />
+    <result column="可以为任意表的字段" jdbcType="字段类型" property="集合中的pojo对象的属性" />  
+  </collection>
+</resultMap>
+```
+
